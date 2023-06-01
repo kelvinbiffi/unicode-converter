@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.17/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Conversor de Texto</title>
+  </head>
+
+  <body class="flex items-center justify-center h-screen bg-gray-100">
+    <div class="w-1/2 bg-white rounded-lg shadow-lg p-8">
+      <h1 class="text-3xl font-bold text-center mb-8">
+        Conversor de Texto para UNICODE
+      </h1>
+      <div class="flex flex-col space-y-4">
+        <textarea
+          id="textarea1"
+          class="w-full h-40 p-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Digite seu texto aqui"
+        ></textarea>
+        <div class="flex justify-center">
+          <button
+            id="copyButton1"
+            class="px-4 py-2 bg-blue-500 text-white font-bold rounded-lg"
+          >
+            Converter Texto
+          </button>
+        </div>
+        <textarea
+          id="textarea2"
+          class="w-full h-40 p-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Texto convertido aparecerá aqui"
+          readonly
+        ></textarea>
+        <div class="flex justify-center">
+          <button
+            id="copyButton2"
+            class="px-4 py-2 bg-green-500 text-white font-bold rounded-lg"
+          >
+            Copiar para a Área de Transferência
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var unicodeMapping = [
+        ["á", "\\u00e1"],
+        ["à", "\\u00e0"],
+        ["â", "\\u00e2"],
+        ["ã", "\\u00e3"],
+        ["ä", "\\u00e4"],
+        ["Á", "\\u00c1"],
+        ["À", "\\u00c0"],
+        ["Â", "\\u00c2"],
+        ["Ã", "\\u00c3"],
+        ["Ä", "\\u00c4"],
+        ["é", "\\u00e9"],
+        ["è", "\\u00e8"],
+        ["ê", "\\u00ea"],
+        ["ê", "\\u00ea"],
+        ["É", "\\u00c9"],
+        ["È", "\\u00c8"],
+        ["Ê", "\\u00ca"],
+        ["Ë", "\\u00cb"],
+        ["í", "\\u00ed"],
+        ["ì", "\\u00ec"],
+        ["î", "\\u00ee"],
+        ["ï", "\\u00ef"],
+        ["Í", "\\u00cd"],
+        ["Ì", "\\u00cc"],
+        ["Î", "\\u00ce"],
+        ["Ï", "\\u00cf"],
+        ["ó", "\\u00f3"],
+        ["ò", "\\u00f2"],
+        ["ô", "\\u00f4"],
+        ["õ", "\\u00f5"],
+        ["ö", "\\u00f6"],
+        ["Ó", "\\u00d3"],
+        ["Ò", "\\u00d2"],
+        ["Ô", "\\u00d4"],
+        ["Õ", "\\u00d5"],
+        ["Ö", "\\u00d6"],
+        ["ú", "\\u00fa"],
+        ["ù", "\\u00f9"],
+        ["û", "\\u00fb"],
+        ["ü", "\\u00fc"],
+        ["Ú", "\\u00da"],
+        ["Ù", "\\u00d9"],
+        ["Û", "\\u00db"],
+        ["ç", "\\u00e7"],
+        ["Ç", "\\u00c7"],
+        ["ñ", "\\u00f1"],
+        ["Ñ", "\\u00d1"],
+        ["&", "\\u0026"],
+        ["\`", "\\u0027"],
+      ];
+
+      function unicodeConverter(text) {
+        return text
+          .split("")
+          .map((char) => {
+            const newChar = unicodeMapping.find((mapped) => mapped[0] == char);
+            return newChar ? newChar[1] : char;
+          })
+          .join("");
+      }
+
+      const copyButton1 = document.getElementById("copyButton1");
+      const copyButton2 = document.getElementById("copyButton2");
+      const textarea1 = document.getElementById("textarea1");
+      const textarea2 = document.getElementById("textarea2");
+
+      copyButton1.addEventListener("click", () => {
+        textarea2.value = unicodeConverter(textarea1.value);
+      });
+
+      copyButton2.addEventListener("click", () => {
+        textarea2.select();
+        document.execCommand("copy");
+      });
+    </script>
+  </body>
+</html>
